@@ -65,7 +65,6 @@ const agregarPersona2 = () => {
 }
 
 
-
 /* ******* Funcion Asociada al Boton de Actualizacion********** */
 const actualizarPersona = () => {
     let objPersona = obtenerDatos();
