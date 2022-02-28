@@ -30,6 +30,8 @@ const agregarPersona2 = () => {
     console.log("personas: ", personas);
     console.log("onjPersona.apellido: ", objPersona.apellido)
 
+    /*Recorrer la lista de personas ya registradas que tienen el mismo email
+    de la persona que pretendo registrar  */
     let personasTempo = personas.filter(element => element.email == objPersona.email);
     let persona = personasTempo[0];
 
@@ -39,7 +41,7 @@ const agregarPersona2 = () => {
 
 
 
-    try {
+    try {   /* Manejando exepciones: No se puede registrar con las cajas de texto vacias */
         if (objPersona.nombre == "" || objPersona.apellido == "" || objPersona.email == "" || objPersona.telefono == "") {
             alert("No se puede ingresar un registro vacio");
         } else {
@@ -68,15 +70,20 @@ const agregarPersona2 = () => {
 const actualizarPersona = () => {
     let objPersona = obtenerDatos();
 
+    /* Recorrer la lista de personas ya registradas cuyo email coincide con el que pretendo actualizar(exceptuando el mismo)
+    para evitar actaulizar un email con uno ya existente registrado; es decir, solo se pueden actualizar el email propio por
+    otro que no este ya registrado */
     let personasTempo = personas.filter(element => element.email == objPersona.email && element.email != persona_email);
     let persona = personasTempo[0];
 
+    /* No se puede actualizar datos que no hayan pasado por la fase del boton de editar;
+    es decir, que no hayn sido registrados con anterioridad */
     if (persona_email == "") {
         alert("No se puede actualizar un registro que no existe, por favor registre primero");
     } else {
-        if (persona != undefined) {
+        if (persona != undefined) {   /* manejando excepciones */
             alert("ya existe una persona con ese email: " + objPersona.email);
-        } else {
+        } else {                       /* Caso contrario, se actualiza el registro */
             personas.map(element => {
                 if (element.email == persona_email) {
                     element.nombre = objPersona.nombre;
