@@ -10,7 +10,7 @@ const obtenerDatos = () => {
     let email = document.getElementById("email").value;
     let telefono = document.getElementById("telefono").value;
 
-    return{
+    return {
         nombre,
         apellido,
         email,
@@ -26,30 +26,31 @@ const agregarPersona2 = () => {
     /* Obtener datos de los campos de texto */
     let objPersona = obtenerDatos();
 
+    /* Debuging */
     console.log("objPersona: ", objPersona);
     console.log("personas: ", personas);
-    console.log("onjPersona.apellido: ",objPersona.apellido)
+    console.log("onjPersona.apellido: ", objPersona.apellido)
 
-    let personasTempo = personas.filter( element => element.email == objPersona.email);
+    let personasTempo = personas.filter(element => element.email == objPersona.email);
     let persona = personasTempo[0];
 
+    /* Debuging */
     console.log("persona: ", persona)
-
     console.log(typeof persona);
 
 
 
     try {
-        if (objPersona.nombre == "" || objPersona.apellido == "" || objPersona.email == "" || objPersona.telefono == "" ){
-            alert("No se puede registrar un registro vacio");
+        if (objPersona.nombre == "" || objPersona.apellido == "" || objPersona.email == "" || objPersona.telefono == "") {
+            alert("No se puede ingresar un registro vacio");
         } else {
             try {
                 if (persona.email == objPersona.email) {
                     alert("Ya existe un registro con el email: " + objPersona.email);
                 } else {
-/*                     personas.push(objPersona);
-                    listarPersonas();
-                    limpiar(); */
+                    /*                     personas.push(objPersona);
+                                        listarPersonas();
+                                        limpiar(); */
                 }
             } catch (error) {
                 personas.push(objPersona);
@@ -69,30 +70,30 @@ const agregarPersona2 = () => {
 const actualizarPersona = () => {
     let objPersona = obtenerDatos();
 
-    let personasTempo = personas.filter( element => element.email == objPersona.email && element.email != persona_email);
+    let personasTempo = personas.filter(element => element.email == objPersona.email && element.email != persona_email);
     let persona = personasTempo[0];
-   
 
-    if (persona != undefined) {
-        alert("ya existe una persona con ese email");
+    if (persona_email == "") {
+        alert("No se puede actualizar un registro que no existe, por favor registre primero");
     } else {
-    if (objPersona.nombre == "" || objPersona.apellido == "" || objPersona.email == "" || objPersona.telefono == "" ){
-        alert("Solo se pueden actualizar registros hechos previamente");
-    } else {
-        personas.map( element => {
-            if (element.email == persona_email) {
-                element.nombre = objPersona.nombre;
-                element.apellido = objPersona.apellido;
-                element.telefono = objPersona.telefono;
-                element.email = objPersona.email; 
-            }
-        });
-        listarPersonas();
-        limpiar();
-        persona_email = "";
+        if (persona != undefined) {
+            alert("ya existe una persona con ese email: " + objPersona.email);
+        } else {
+            personas.map(element => {
+                if (element.email == persona_email) {
+                    element.nombre = objPersona.nombre;
+                    element.apellido = objPersona.apellido;
+                    element.telefono = objPersona.telefono;
+                    element.email = objPersona.email;
+                }
+            });
+            listarPersonas();
+            limpiar();
+            persona_email = "";
+        }
+
     }
 
-    }
 }
 
 /** **** Listar los objetos del array 'personas' en la tabla ******/
@@ -118,7 +119,7 @@ const limpiar = () => {
     document.getElementById("nombre").value = "";
     document.getElementById("apellido").value = "";
     document.getElementById("email").value = "";
-    document.getElementById("telefono").value="";
+    document.getElementById("telefono").value = "";
 }
 
 /* *************Accion asociada al Boton Editar******** */
@@ -126,9 +127,10 @@ const editarPersona = (email) => {
     let personasTempo = personas.filter(objPersona => objPersona.email == email);
     let persona = personasTempo[0];
     document.getElementById("nombre").value = persona.nombre;
-    document.getElementById("apellido").value = persona.apellido;  
+    document.getElementById("apellido").value = persona.apellido;
     document.getElementById("email").value = persona.email;
     document.getElementById("telefono").value = persona.telefono;
+    /* Debuging */
     console.log("persona.email:", persona.email);
 
     persona_email = persona.email;
@@ -140,5 +142,7 @@ const eliminarPersona = (email) => {
     let personasTempo = personas.filter(objPersona => objPersona.email != email);
     personas = personasTempo;
     listarPersonas();
+
+    /* Debuging */
     console.log("Persona Registrada: ", personas);
 }
